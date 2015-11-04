@@ -1,0 +1,20 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 364
+  ClientWidth = 656
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Client
+    Size.Width = 656.000000000000000000
+    Size.Height = 364.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+  end
+end
