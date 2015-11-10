@@ -240,10 +240,11 @@ begin
   Canvas.DrawLine(TPointF.Zero + CenterXY, TPointF.Create(FTargerFunction.X,
     -FTargerFunction.Y) * Scale + CenterXY, 1);
   Canvas.Stroke.Color := TAlphaColorRec.Black;
-  Canvas.DrawLine(TPointF.Create(0, -FTargerFunction.Y) * Scale + CenterXY,
-    TPointF.Create(FTargerFunction.X, 0) * Scale + CenterXY, 1);
+  Canvas.DrawLine(TPointF.Create(0, -FTargerFunction.X) * Scale + CenterXY,
+    TPointF.Create(FTargerFunction.Y, 0) * Scale + CenterXY, 1);
 
   // PerpendikularPaint(TPointF.Zero, TPointF.Create(FTargerFunction.X,    -FTargerFunction.Y), 1);
+  //Canvas.fil
 end;
 
 procedure TGraphicLP.PaintXY;

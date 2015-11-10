@@ -2,14 +2,12 @@
 
 interface
 
-uses
-  System.Math;
+uses System.Math;
 
 Type
 {$M+}
   TQueueingTheory = Class(TObject)
   private
-    Fn: Integer;
     Fλ: Single;
     Fμ: Single;
   protected
@@ -27,6 +25,8 @@ Type
 
   /// <summary>Многоканаьльная СМО с отказами</summary>
   TQueueingTheoryMultiFailure = Class(TQueueingTheory) // главній
+  private
+    Fn: Integer;
   public
     /// <summary>Вероятность занятости канала
     /// <param name="0">Вероятность, что канал свободен (доля времени простоя каналов). </param>
@@ -50,26 +50,41 @@ Type
   private
     Fm: Integer;
   public
-    /// <summary> </summary>
+    /// <summary> Вероятность, что канал свободен</summary>
     Function P(Const I: Integer): Single; reintroduce;
-    /// <summary> Вероятность отказа</summary>
-    Function Pотказа: Single;
-    /// <summary>Относительная пропускная способность </summary>
-    Function Q: Single;
-    /// <summary> Абсолютная пропускная способность</summary>
-    Function A: Single;
-    /// <summary>Коэффициент занятости каналов обслуживанием. </summary>
-    function Kзанятости: Single;
-    /// <summary>  Среднее число заявок, находящихся в очереди</summary>
-    Function Lочереди: Single;
+    /// <summary> Вероятность отказа (Доля заявок, получивших отказ).</summary>
+    function Pотказа: Single; override;
+    /// <summary> Вероятность обслуживания поступающих заявок (вероятность того, что клиент будет обслужен).</summary>
+    function Pобс: Single;
+    /// <summary> Среднее число каналов, занятых обслуживанием (Среднее число занятых каналов).</summary>
+    function Nз: Single;
+
+    /// <summary> Среднее число простаивающих каналов.</summary>
+    function Nпр: Single;
+    /// <summary> Коэффициент занятости каналов обслуживанием.</summary>
+    function Кз: Single;
+    /// <summary> Абсолютная пропускная способность (Интенсивность выходящего потока обслуженных заявок).</summary>
+    function A: Single;
+    /// <summary> Время обслуживания.</summary>
+    function Tобс: Single;
+    /// <summary> Среднее время простоя СМО.</summary>
+    function Tпр: Single;
+    /// <summary> Вероятность образования очереди.</summary>
+    function Poh: Single;
+    /// <summary> Вероятность отсутствия очереди.</summary>
+    function Pот: Single;
+
+    /// <summary> Среднее число заявок, находящихся в очереди.</summary>
+    function Loh: Single;
+
     /// <summary> Среднее время простоя СМО (среднее время ожидания обслуживания заявки в очереди).</summary>
-    Function Tочереди: Single;
+    Function Toh: Single;
+    /// <summary> Среднее число обслуживаемых заявок.</summary>
+    Function Lобс: Single;
     /// <summary> Среднее число заявок в системе.</summary>
-    function Lsys: Single;
-    /// <summary>Среднее время пребывания заявки в СМО. </summary>
-    function Tsmo: Single;
-    /// <summary>Вероятность образования очереди. </summary>
-    function Pоч: Single;
+    Function Lсмо: Single;
+    /// <summary> Среднее время пребывания заявки в СМО.</summary>
+    Function Tсмо: Single;
   published
     /// <summary>Число мест в очереди</summary>
     property m: Integer read Fm write Fm;
@@ -102,7 +117,11 @@ Begin
       Result := Result + Power(ρ, j) / Factorial(j);
     Result := 1 / Result;
   End
-  else
+  else if I >= Self.N then
+  Begin
+
+  End
+  Else
     Result := Power(ρ, I) / Factorial(I) * P(0);
 end;
 
@@ -117,76 +136,107 @@ begin
 end;
 
 { TQueueingTheoryMultiWait }
-function TQueueingTheoryMultiWait.Pотказа: Single;
-begin
-  Result := (Power(ρ, N + m) / (Power(N, m) * Factorial(N))) * P(0);
 
+function TQueueingTheoryMultiWait.A: Single;
+begin
+  Result := Pобс * λ;
 end;
 
-function TQueueingTheoryMultiWait.Pоч: Single;
+function TQueueingTheoryMultiWait.Loh: Single;
+begin
+
+  Result := (Power(ρ, (N + 1)) / (Factorial(N) * N)) *
+    ((1 - Power((ρ / N), m) * (m + 1 - m * ρ / N)) / Power(1 - (ρ / N), 2)) * P(0);
+end;
+
+function TQueueingTheoryMultiWait.Lобс: Single;
+begin
+  Result := Q * ρ;
+end;
+
+function TQueueingTheoryMultiWait.Lсмо: Single;
+begin
+  Result := Loh + Lобс;
+end;
+
+function TQueueingTheoryMultiWait.Nз: Single;
+begin
+  Result := ρ * Pобс;
+end;
+
+function TQueueingTheoryMultiWait.Nпр: Single;
+begin
+  Result := N - Nз;
+end;
+
+function TQueueingTheoryMultiWait.P(const I: Integer): Single;
+var
+  l: Integer;
+Begin
+  if I = 0 then
+
+  begin
+    Result := 1;
+    for l := 1 to N do
+      Result := Result + (Power(ρ, l) / Factorial(l));
+    Result := Result + (Power(ρ, N) / Factorial(N)) * ((ρ / N - Power(ρ / N, m + 1)) / (1 - ρ / N));
+    Result := Power(Result, -1);
+  end
+  else if (I > 0) and (I <= N) then
+  Begin
+    Result := (Power(ρ, I) / Factorial(I)) * P(0);
+  End
+  else
+  begin
+    Result := P(0) * (Power(ρ, I)) / (Factorial(N) * Power(N, I - N));
+  end;
+end;
+
+function TQueueingTheoryMultiWait.Poh: Single;
 begin
   Result := Power(ρ, N) / Factorial(N);
   Result := Result * ((1 - Power(ρ / N, m)) / (1 - ρ / N));
   Result := Result * P(0);
 end;
 
-function TQueueingTheoryMultiWait.Q: Single;
+function TQueueingTheoryMultiWait.Pобс: Single;
 begin
   Result := 1 - Pотказа;
 end;
 
-function TQueueingTheoryMultiWait.Tsmo: Single;
+function TQueueingTheoryMultiWait.Pот: Single;
 begin
-  Result := Lsys / A;
+  Result := 1 - Poh;
 end;
 
-function TQueueingTheoryMultiWait.Tочереди: Single;
+function TQueueingTheoryMultiWait.Pотказа: Single;
 begin
-  Result := Lочереди / (A);
+  Result := Power(ρ, N + m) / (Power(N, m) * Factorial(N)) * P(0);
 end;
 
-function TQueueingTheoryMultiWait.A: Single;
+function TQueueingTheoryMultiWait.Toh: Single;
 begin
-  Result := λ * Q;
+  Result := Loh / (A);
 end;
 
-function TQueueingTheoryMultiWait.Kзанятости: Single;
+function TQueueingTheoryMultiWait.Tобс: Single;
 begin
-  Result := A / μ / N; // a/m/n
+  Result := 1 / μ;
 end;
 
-function TQueueingTheoryMultiWait.Lsys: Single;
+function TQueueingTheoryMultiWait.Tпр: Single;
 begin
-  Result := Lочереди + A / μ;
+  Result := Pотказа * Tобс
 end;
 
-function TQueueingTheoryMultiWait.Lочереди: Single;
-var
-  mer: Single;
+function TQueueingTheoryMultiWait.Tсмо: Single;
 begin
-  mer := 1 - (ρ / N);
-  Result := (Power(ρ, (N + 1)) / (Factorial(N) * N)) *
-    ((1 - Power((ρ / N), m) * (m + 1 - m * ρ / N)) / (mer * mer)) * P(0);
+  Result := Lсмо / A;
 end;
 
-function TQueueingTheoryMultiWait.P(const I: Integer): Single;
-var
-  k: Integer;
-  tmpA, tmpB: Single;
-Begin
-  tmpA := 1;
-  tmpB := 0;
-  // P0 = 0.0158
-  if I = 0 then
-  Begin
-    for k := 1 to N do
-      tmpA := tmpA + (Power(ρ, k) / Factorial(k));
-    for k := 1 to m do
-      tmpB := tmpB + Power(ρ / N, k);
-    Result := 1 / (tmpA + (Power(ρ, N) / Factorial(N)) * tmpB);
-  End
-  else
-    Result := Power(ρ, I) / Factorial(I) * P(0);
+function TQueueingTheoryMultiWait.Кз: Single;
+begin
+  Result := Nз / N;
 end;
 
 { TQueueingTheory }

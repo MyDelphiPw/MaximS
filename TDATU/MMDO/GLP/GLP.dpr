@@ -4,7 +4,8 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   main in 'main.pas' {Form3},
-  uGraphicalLP in 'uGraphicalLP.pas';
+  uGraphicalLP in 'uGraphicalLP.pas',
+  CoordinatePlane in 'CoordinatePlane.pas';
 
 {$R *.res}
 
