@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DC61B735-60A6-41BB-BBFC-D6D5C5072263}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Install\MaximS.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demo\FPS\Project6.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="MaximS">
+        <MSBuild Projects="Install\MaximS.dproj"/>
+    </Target>
+    <Target Name="MaximS:Clean">
+        <MSBuild Projects="Install\MaximS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MaximS:Make">
+        <MSBuild Projects="Install\MaximS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Project6">
+        <MSBuild Projects="Demo\FPS\Project6.dproj"/>
+    </Target>
+    <Target Name="Project6:Clean">
+        <MSBuild Projects="Demo\FPS\Project6.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Project6:Make">
+        <MSBuild Projects="Demo\FPS\Project6.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="MaximS;Project6"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="MaximS:Clean;Project6:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="MaximS:Make;Project6:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

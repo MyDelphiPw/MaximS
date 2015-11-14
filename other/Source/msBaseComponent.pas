@@ -8,7 +8,7 @@ uses
 type
   TmsBase = class(TComponent)
   Private Const
-    CAutor = '©Maxim Sysoev, mydelphi.pw, 2015';
+    CAutor = '©Maxim Sysoev, codmasters.ru, 2015';
   protected
     fAutor: String;
     fVersion: String;

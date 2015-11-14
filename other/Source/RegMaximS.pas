@@ -7,7 +7,7 @@ interface
 uses
   Classes
 {$IFDEF DELPHIXE_UP}
-    , msProxyFind
+    , msProxyFind, msFPS
 {$ENDIF}
     ;
 
@@ -20,7 +20,11 @@ const
   AutorCell = 'MaximS';
 begin
 {$IFDEF DELPHIXE_UP}
-  RegisterComponents(AutorCell, [TmsProxyFind]);
+  RegisterComponents(AutorCell, [
+                                  TmsProxyFind,
+                                  TmsFPS
+                                ]
+                    );
 {$ENDIF}
 end;
 
