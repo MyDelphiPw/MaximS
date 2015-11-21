@@ -4,6 +4,7 @@ object Form3: TForm3
   Caption = 'Form3'
   ClientHeight = 364
   ClientWidth = 656
+  Quality = HighQuality
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -11,10 +12,29 @@ object Form3: TForm3
   OnDestroy = FormDestroy
   DesignerMasterStyle = 0
   object Panel1: TPanel
-    Align = Client
-    Size.Width = 656.000000000000000000
-    Size.Height = 364.000000000000000000
+    Position.X = 296.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 465.000000000000000000
+    Size.Height = 249.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
+  end
+  object Button1: TButton
+    Position.X = 560.000000000000000000
+    Position.Y = 56.000000000000000000
+    TabOrder = 2
+    Text = 'Button1'
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 544
+    Top = 200
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+      end>
+    Left = 72
+    Top = 240
   end
 end

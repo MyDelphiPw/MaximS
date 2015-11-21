@@ -6,7 +6,7 @@
         <Projects Include="Install\MaximS.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Demo\FPS\Project6.dproj">
+        <Projects Include="Demo\FPS\FPS_Demo.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -26,23 +26,23 @@
     <Target Name="MaximS:Make">
         <MSBuild Projects="Install\MaximS.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Project6">
-        <MSBuild Projects="Demo\FPS\Project6.dproj"/>
+    <Target Name="FPS_Demo">
+        <MSBuild Projects="Demo\FPS\FPS_Demo.dproj"/>
     </Target>
-    <Target Name="Project6:Clean">
-        <MSBuild Projects="Demo\FPS\Project6.dproj" Targets="Clean"/>
+    <Target Name="FPS_Demo:Clean">
+        <MSBuild Projects="Demo\FPS\FPS_Demo.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Project6:Make">
-        <MSBuild Projects="Demo\FPS\Project6.dproj" Targets="Make"/>
+    <Target Name="FPS_Demo:Make">
+        <MSBuild Projects="Demo\FPS\FPS_Demo.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="MaximS;Project6"/>
+        <CallTarget Targets="MaximS;FPS_Demo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="MaximS:Clean;Project6:Clean"/>
+        <CallTarget Targets="MaximS:Clean;FPS_Demo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="MaximS:Make;Project6:Make"/>
+        <CallTarget Targets="MaximS:Make;FPS_Demo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

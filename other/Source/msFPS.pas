@@ -18,6 +18,7 @@ Type
     FOnFPS: TOnFPS;
     FControl: TControl;
     FTimer: TTimer;
+    FEnabled: Boolean;
     procedure OnTimer(Sender: TObject);
     procedure OnPaint(Sender: TObject; Canvas: TCanvas; const [Ref] ARect: TRectF);
     procedure SetControl(const Value: TControl);
@@ -26,6 +27,7 @@ Type
     destructor Destroy; override;
     constructor Create(AOwner: TComponent); override;
   published
+    property Enabled: Boolean read FEnabled write FEnabled default true;
     property Value: Single read fValue;
     property Control: TControl read FControl write SetControl;
     property OnFPS: TOnFPS read FOnFPS write FOnFPS;
@@ -38,7 +40,7 @@ begin
   inherited;
   FTimer := TTimer.Create(nil);
   FTimer.OnTimer := OnTimer;
-
+  Enabled := true;
   fValue := 0;
   fFPSCounter := 0;
 end;
@@ -56,8 +58,6 @@ end;
 
 procedure TmsFPS.OnTimer(Sender: TObject);
 begin
-  if not Assigned(Control) then
-    exit;
   Control.Repaint;
   fValue := fFPSCounter;
   if Assigned(OnFPS) then
@@ -67,7 +67,7 @@ end;
 
 procedure TmsFPS.SetControl(const Value: TControl);
 begin
-  FTimer.Enabled := Assigned(Value);
+  FTimer.Enabled := Enabled and Assigned(Value);
   if not FTimer.Enabled then
     exit;
   FControl := Value;

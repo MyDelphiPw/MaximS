@@ -2,7 +2,7 @@
 
 {$APPTYPE CONSOLE}
 {$R *.res}
-{/$DEFINE AUTO}
+{ /$DEFINE AUTO }
 
 uses
   System.SysUtils,
@@ -19,16 +19,15 @@ begin
   try
     { TODO -oUser -cConsole Main : Insert code here }
 {$IFDEF AUTO}
-    // Core.N := 3;
-    // Core.m := 2;
-    // Core.λ := 1;
-    // Core.μ := 0.2;
     Core.N := 2;
-    Core.m := 3;
+    Core.m := 4;
     Core.λ := 2;
-    Core.μ := 0.5;
-{$ELSE}
-    Writeln('-----Ввод информации----');
+    Core.μ := 2 / 3;
+{$ELSE} Writeln('-----Ввод информации----');
+    Writeln('Количество каналов: ');
+    Readln(Buffer);
+    Core.N := Buffer.ToString.ToInteger;
+
     Write('Число мест в очереди: ');
     Readln(Buffer);
     Core.m := Buffer.ToString.ToInteger;
@@ -38,9 +37,7 @@ begin
     Writeln('Интенсивность обслуживания заявок за единицу времени: ');
     Readln(Buffer);
     Core.μ := Buffer;
-    Writeln('Количество каналов: ');
-    Readln(Buffer);
-    Core.N := Buffer.ToString.ToInteger;
+
 {$ENDIF}
     {
       -----Ввод информации----

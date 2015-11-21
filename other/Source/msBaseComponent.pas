@@ -18,7 +18,6 @@ type
   public
     { Public declarations }
     Constructor Create(AOwner: TComponent); overload; override;
-    Constructor Create; overload; Virtual;
   published
     { Published declarations }
     Property Autor: String read fAutor;
@@ -32,13 +31,10 @@ implementation
 constructor TmsBase.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  Self.Create;
-end;
-
-constructor TmsBase.Create;
-begin
   fAutor := CAutor;
   fVersion := '0.1';
 end;
+
+
 
 end.
