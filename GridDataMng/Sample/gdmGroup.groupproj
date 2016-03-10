@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D0E9A62A-E064-4EF5-80E5-7B18954DDF93}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\GridDataManager.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GridDataManagerSample.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="GridDataManager">
+        <MSBuild Projects="..\GridDataManager.dproj"/>
+    </Target>
+    <Target Name="GridDataManager:Clean">
+        <MSBuild Projects="..\GridDataManager.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GridDataManager:Make">
+        <MSBuild Projects="..\GridDataManager.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GridDataManagerSample">
+        <MSBuild Projects="GridDataManagerSample.dproj"/>
+    </Target>
+    <Target Name="GridDataManagerSample:Clean">
+        <MSBuild Projects="GridDataManagerSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GridDataManagerSample:Make">
+        <MSBuild Projects="GridDataManagerSample.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="GridDataManager;GridDataManagerSample"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="GridDataManager:Clean;GridDataManagerSample:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="GridDataManager:Make;GridDataManagerSample:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

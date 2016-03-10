@@ -1,0 +1,170 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 751
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Grid1: TGrid
+    Align = Client
+    Size.Width = 751.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    RowCount = 100
+    RowHeight = 21.000000000000000000
+    OnGetValue = Grid1GetValue
+    OnSetValue = Grid1SetValue
+    Viewport.Width = 731.000000000000000000
+    Viewport.Height = 415.000000000000000000
+    object Column1: TColumn
+      Header = 'TColumn'
+      Size.Width = 73.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+    object CheckColumn1: TCheckColumn
+      Header = 'TCheckColumn'
+      Position.X = 73.000000000000000000
+      Size.Width = 96.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+    end
+    object StringColumn1: TStringColumn
+      Header = 'TStringColumn'
+      Position.X = 169.000000000000000000
+      Size.Width = 88.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+    end
+    object ProgressColumn1: TProgressColumn
+      Header = 'ProgressColumn'
+      Position.X = 257.000000000000000000
+      Size.Width = 96.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Max = 100.000000000000000000
+    end
+    object PopupColumn1: TPopupColumn
+      Header = 'TPopupColumn'
+      Position.X = 353.000000000000000000
+      Size.Width = 96.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+    end
+    object ImageColumn1: TImageColumn
+      Header = 'TImageColumn'
+      Position.X = 449.000000000000000000
+      Size.Width = 88.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+    end
+    object DateColumn1: TDateColumn
+      Header = 'TDateColumn'
+      Position.X = 537.000000000000000000
+      Size.Width = 77.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+    end
+    object TimeColumn1: TTimeColumn
+      Header = 'TTimeColumn'
+      Position.X = 614.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 420.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 7
+    end
+  end
+  object Layout1: TLayout
+    Align = Bottom
+    Position.Y = 440.000000000000000000
+    Size.Width = 751.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Label1: TLabel
+      Align = Left
+      StyledSettings = [Family, Style, FontColor]
+      Size.Width = 65.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = #1050#1086#1083#1086#1085#1082#1072
+    end
+    object NumberBox1: TNumberBox
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Left
+      TabOrder = 2
+      Cursor = crIBeam
+      TextSettings.Font.Size = 16.000000000000000000
+      Position.X = 65.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      StyledSettings = [Family, Style, FontColor]
+    end
+    object NumberBox2: TNumberBox
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Left
+      TabOrder = 1
+      Cursor = crIBeam
+      TextSettings.Font.Size = 16.000000000000000000
+      Position.X = 230.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      StyledSettings = [Family, Style, FontColor]
+    end
+    object Label2: TLabel
+      Align = Left
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 165.000000000000000000
+      Size.Width = 65.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = #1057#1090#1088#1086#1082#1072
+    end
+    object Label3: TLabel
+      Align = Left
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 330.000000000000000000
+      Size.Width = 95.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = #1047#1085#1072#1095#1077#1085#1080#1077
+    end
+    object Edit1: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Left
+      TabOrder = 5
+      TextSettings.Font.Size = 16.000000000000000000
+      Position.X = 425.000000000000000000
+      Size.Width = 152.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      StyledSettings = [Family, Style, FontColor]
+    end
+    object Button1: TButton
+      Align = Client
+      Size.Width = 174.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+      Text = #1055#1088#1080#1084#1077#1085#1080#1090#1100
+      OnClick = Button1Click
+    end
+  end
+end
