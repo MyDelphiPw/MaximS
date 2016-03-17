@@ -64,7 +64,8 @@ end;
 
 function TGridDataManager.Read(const Col, Row: Integer): TValue;
 begin
-  if NOT Assigned(MyGrid) then
+  if (NOT Assigned(MyGrid)) or (Col > FMyGrid.ColumnCount) or
+    (Row > FMyGrid.RowCount) then
     Exit;
   SetColRowLength(FMyGrid.ColumnCount, FMyGrid.RowCount);
   Result := FData[Col][Row];
@@ -102,7 +103,8 @@ end;
 
 procedure TGridDataManager.Write(const Col, Row: Integer; const Value: TValue);
 begin
-  if NOT Assigned(MyGrid) then
+  if (NOT Assigned(MyGrid)) or (Col > FMyGrid.ColumnCount) or
+    (Row > FMyGrid.RowCount) then
     Exit;
   SetColRowLength(FMyGrid.ColumnCount, FMyGrid.RowCount);
   FData[Col][Row] := Value;
