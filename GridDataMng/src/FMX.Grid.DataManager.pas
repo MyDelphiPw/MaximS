@@ -1,9 +1,10 @@
-unit FMX.Grid.DataManager;
+п»їunit FMX.Grid.DataManager;
 
 interface
 
 uses
   System.Classes,
+  System.SysUtils,
   System.Rtti,
   FMX.Grid;
 
@@ -17,9 +18,11 @@ type
     Procedure SetRowLength(Const Value: Integer); Virtual;
     procedure SetColRowLength(Const Col, Row: Integer); Virtual;
   public
-    /// <summary>Получить значение</summary>
-    Function Read(Const Col, Row: Integer): TValue;
-    /// <summary>Записать значение</summary>
+    /// <summary>РџРѕР»СѓС‡РёС‚СЊ Р·РЅР°С‡РµРЅРёРµ</summary>
+    Function Read(Const Col, Row: Integer): TValue; overload;
+    Function ReadAsSingle(Const Col, Row: Integer): Single; overload;
+    Function ReadAsInteger(Const Col, Row: Integer): Integer; overload;
+    /// <summary>Р—Р°РїРёСЃР°С‚СЊ Р·РЅР°С‡РµРЅРёРµ</summary>
     Procedure Write(Const Col, Row: Integer; Const Value: TValue);
     //
     procedure Clear; overload;
@@ -64,25 +67,42 @@ end;
 
 function TGridDataManager.Read(const Col, Row: Integer): TValue;
 begin
-  if (NOT Assigned(MyGrid)) or (Col > FMyGrid.ColumnCount) or
-    (Row > FMyGrid.RowCount) then
+  if NOT Assigned(FMyGrid) then
     Exit;
   SetColRowLength(FMyGrid.ColumnCount, FMyGrid.RowCount);
   Result := FData[Col][Row];
+end;
+
+function TGridDataManager.ReadAsInteger(const Col, Row: Integer): Integer;
+begin
+  if NOT Result.TryParse(Read(Col, Row).AsString, Result) then
+    Result := 0;
+end;
+
+function TGridDataManager.ReadAsSingle(const Col, Row: Integer): Single;
+begin
+  if NOT Result.TryParse(Read(Col, Row).AsString, Result) then
+    Result := 0;
 end;
 
 function TGridDataManager.RowCount: Integer;
 begin
   Result := 0;
   if ColumnCount > 0 then
-    Result := Length(FData[0]);
+    Result := Length(FData[Low(FData)]);
 end;
 
 procedure TGridDataManager.SetColLength(const Value: Integer);
 begin
-  if FMyGrid.ColumnCount = self.ColumnCount then
-    Exit;
   SetLength(FData, Value);
+end;
+
+procedure TGridDataManager.SetRowLength(const Value: Integer);
+var
+  I: Integer;
+begin
+  for I := Low(FData) to High(FData) do
+    SetLength(FData[I], Value);
 end;
 
 procedure TGridDataManager.SetColRowLength(const Col, Row: Integer);
@@ -91,20 +111,9 @@ begin
   SetRowLength(Row);
 end;
 
-procedure TGridDataManager.SetRowLength(const Value: Integer);
-var
-  I: Integer;
-begin
-  if FMyGrid.RowCount = self.RowCount then
-    Exit;
-  for I := Low(FData) to High(FData) do
-    SetLength(FData[I], Value);
-end;
-
 procedure TGridDataManager.Write(const Col, Row: Integer; const Value: TValue);
 begin
-  if (NOT Assigned(MyGrid)) or (Col > FMyGrid.ColumnCount) or
-    (Row > FMyGrid.RowCount) then
+  if NOT Assigned(FMyGrid) then
     Exit;
   SetColRowLength(FMyGrid.ColumnCount, FMyGrid.RowCount);
   FData[Col][Row] := Value;

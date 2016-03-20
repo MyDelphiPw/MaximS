@@ -9,6 +9,9 @@
         <Projects Include="Sample\GridDataManagerSample.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="C:\Users\Maxim\Documents\Embarcadero\Studio\Projects\ПринРешВУслРиск\proj\ПРвУР.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="GridDataManagerSample:Make">
         <MSBuild Projects="Sample\GridDataManagerSample.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ПРвУР">
+        <MSBuild Projects="C:\Users\Maxim\Documents\Embarcadero\Studio\Projects\ПринРешВУслРиск\proj\ПРвУР.dproj"/>
+    </Target>
+    <Target Name="ПРвУР:Clean">
+        <MSBuild Projects="C:\Users\Maxim\Documents\Embarcadero\Studio\Projects\ПринРешВУслРиск\proj\ПРвУР.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ПРвУР:Make">
+        <MSBuild Projects="C:\Users\Maxim\Documents\Embarcadero\Studio\Projects\ПринРешВУслРиск\proj\ПРвУР.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="GridDataManager;GridDataManagerSample"/>
+        <CallTarget Targets="GridDataManager;GridDataManagerSample;ПРвУР"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="GridDataManager:Clean;GridDataManagerSample:Clean"/>
+        <CallTarget Targets="GridDataManager:Clean;GridDataManagerSample:Clean;ПРвУР:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="GridDataManager:Make;GridDataManagerSample:Make"/>
+        <CallTarget Targets="GridDataManager:Make;GridDataManagerSample:Make;ПРвУР:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

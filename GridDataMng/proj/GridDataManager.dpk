@@ -34,6 +34,7 @@ requires
   fmx;
 
 contains
-  FMX.Grid.DataManager in '..\src\FMX.Grid.DataManager.pas';
+  FMX.Grid.DataManager in '..\src\FMX.Grid.DataManager.pas',
+  gdmUtils in '..\src\gdmUtils.pas';
 
 end.
