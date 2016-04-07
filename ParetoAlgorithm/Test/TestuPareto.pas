@@ -15,15 +15,7 @@ uses
   TestFramework, uPareto, System.Generics.Collections;
 
 type
-  // Test methods for class TParetoItem
 
-  TestTParetoItem = class(TTestCase)
-  strict private
-    FParetoItem: TParetoItem;
-  public
-    procedure SetUp; override;
-    procedure TearDown; override;
-  end;
   // Test methods for class TPareto
 
   TestTPareto = class(TTestCase)
@@ -33,91 +25,117 @@ type
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure НесравнимыеЗначения;
-    procedure НесравнимыеЗначения2;
+    procedure Несравнимые_Одинаковые_Значения;
+    procedure Несравнимые_Значения;
     procedure А_Больше_Б;
-    procedure А_Меньше_Б;
-    procedure ОдинаковыеЗначения;
-    Procedure Сжатие;
+    procedure Б_Больше_А;
+    procedure МерскаяЗадачаСравнение;
+    procedure МерскаяЗадача;
+    procedure Задача_В_Универе;
+    procedure Вязка_Элементов;
   end;
 
 implementation
 
-procedure TestTParetoItem.SetUp;
-begin
-  FParetoItem := TParetoItem.Create(5, 5, 'Test');
-end;
-
-procedure TestTParetoItem.TearDown;
-begin
-  FParetoItem.Free;
-  FParetoItem := nil;
-end;
+{ TestTPareto }
 
 procedure TestTPareto.SetUp;
 begin
+  inherited SetUp;
   FPareto := TPareto.Create;
-  FPareto.AddRange([ //
-    TParetoItem.Create(1, 5, '1'), // 0
-    TParetoItem.Create(2, 4, '2'), // 1
-    TParetoItem.Create(3, 3, '3'), // 2
-    TParetoItem.Create(4, 2, '4'), // 3
-    TParetoItem.Create(5, 1, '5'), // 4
-    TParetoItem.Create(3, 3, '6') // 5
-
-    { } ]);
 end;
 
 procedure TestTPareto.TearDown;
 begin
+
+  inherited TearDown;
   FPareto.Free;
   FPareto := nil;
 end;
 
 procedure TestTPareto.А_Больше_Б;
 begin
-  FPareto.MaxA := False;
-  FPareto.MaxB := True;
-  CheckTrue(FPareto.Compare(0, 1) = TParetoResult.RESULT_BIGER);
+  FPareto.AddRange([ //
+    TParetoItem.Create(3, 4, 'A1'), TParetoItem.Create(1, 3, 'A2')]);
+  CheckEquals(FPareto.Compare(0, 1), 1);
+  FPareto.Clear;
 end;
 
-procedure TestTPareto.НесравнимыеЗначения;
+procedure TestTPareto.Б_Больше_А;
 begin
-  FPareto.MaxA := True;
-  FPareto.MaxB := True;
-  CheckTrue(FPareto.Compare(0, 1) = TParetoResult.RESULT_INCOMPARABLY);
+  FPareto.AddRange([ //
+    TParetoItem.Create(1, 2, 'A1'), TParetoItem.Create(1, 3, 'A2')]);
+  CheckEquals(FPareto.Compare(0, 1), -1);
+  FPareto.Clear;
 end;
 
-procedure TestTPareto.НесравнимыеЗначения2;
+procedure TestTPareto.Вязка_Элементов;
 begin
-  FPareto.MaxA := False;
-  FPareto.MaxB := False;
-  CheckTrue(FPareto.Compare(0, 1) = TParetoResult.RESULT_INCOMPARABLY);
+  CheckEquals(Length(TPareto.WebElement([1, 3, 5, 6])), 6);
 end;
 
-procedure TestTPareto.А_Меньше_Б;
+procedure TestTPareto.Задача_В_Универе;
 begin
-  FPareto.MaxA := True;
-  FPareto.MaxB := False;
-  CheckTrue(FPareto.Compare(0, 1) = TParetoResult.RESULT_SMALLER);
+  FPareto.MaxB := false;
+  FPareto.AddRange([ //
+    TParetoItem.Create(58, 14, 'A1'), //
+    TParetoItem.Create(58, 18.3, 'A2'), //
+    TParetoItem.Create(57, 7.8, 'A3'), //
+    TParetoItem.Create(56, 9.2, 'A4'), //
+    TParetoItem.Create(55, 10, 'A5'), //
+    TParetoItem.Create(62.5, 15.2, 'A6')
+    { } ]);
+  // CheckEquals(FPareto.Compare(0, 3), 1);
+  CheckEquals(FPareto.Compress, 3);
+  FPareto.Clear;
 end;
 
-procedure TestTPareto.ОдинаковыеЗначения;
+procedure TestTPareto.МерскаяЗадача;
 begin
-  FPareto.MaxA := True;
-  FPareto.MaxB := False;
-  CheckTrue(FPareto.Compare(2, 5) = TParetoResult.RESULT_INCOMPARABLY);
+  FPareto.MaxB := false;
+  FPareto.AddRange([ //
+    TParetoItem.Create(4, 4.2, 'A1'), //
+    TParetoItem.Create(2.9, 3.3, 'A2'), //
+    TParetoItem.Create(1.9, 2.2, 'A3'), //
+    TParetoItem.Create(3.35, 4.2, 'A4')
+    { } ]);
+  CheckEquals(FPareto.Compare(0, 3), 1);
+  CheckEquals(FPareto.Compress, 3);
+  FPareto.Clear;
 end;
 
-procedure TestTPareto.Сжатие;
+procedure TestTPareto.МерскаяЗадачаСравнение;
 begin
-  FPareto.Compress;
+  FPareto.AddRange([ //
+    TParetoItem.Create(3, 1, 'A1'), TParetoItem.Create(1, 3, 'A2')]);
+  CheckEquals(FPareto.Compare(0, 1), 0);
+  FPareto.Clear;
+end;
+
+procedure TestTPareto.Несравнимые_Значения;
+begin
+  FPareto.MaxB := false;
+  FPareto.AddRange([ //
+    TParetoItem.Create(4, 4.2, 'A1'), TParetoItem.Create(3.35, 4.2, 'A2')]);
+  CheckEquals(FPareto.Compare(0, 1), 1);
+  FPareto.Clear;
+end;
+
+procedure TestTPareto.Несравнимые_Одинаковые_Значения;
+begin
+  FPareto.AddRange([TParetoItem.Create(1, 1, 'A1'), TParetoItem.Create(1,
+    1, 'A2')]);
+  CheckEquals(FPareto.Compare(0, 1), 0);
+  FPareto.MaxA := false;
+  CheckEquals(FPareto.Compare(0, 1), 0);
+  FPareto.MaxB := false;
+  CheckEquals(FPareto.Compare(0, 1), 0);
+  FPareto.Clear;
 end;
 
 initialization
 
 // Register any test cases with the test runner
-RegisterTest(TestTParetoItem.Suite);
 RegisterTest(TestTPareto.Suite);
 
 end.

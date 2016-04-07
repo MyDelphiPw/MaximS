@@ -1,0 +1,86 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 376
+  ClientWidth = 312
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  DesignerMasterStyle = 3
+  object Layout1: TLayout
+    Align = Top
+    Padding.Left = 5.000000000000000000
+    Padding.Top = 1.000000000000000000
+    Padding.Right = 5.000000000000000000
+    Padding.Bottom = 1.000000000000000000
+    Size.Width = 312.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Switch1: TSwitch
+      Align = Right
+      IsChecked = False
+      Position.X = 263.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 44.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'switchstyle'
+      TabOrder = 0
+      OnSwitch = Switch1Switch
+    end
+    object Label1: TLabel
+      Align = Client
+      Size.Width = 258.000000000000000000
+      Size.Height = 31.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'labelstyle'
+      Text = #1042#1082#1083#1102#1095#1080#1090#1100' '#1092#1080#1083#1086#1089#1086#1092#1086#1074
+    end
+  end
+  object Layout2: TLayout
+    Align = Top
+    Padding.Left = 5.000000000000000000
+    Padding.Right = 5.000000000000000000
+    Position.Y = 33.000000000000000000
+    Size.Width = 312.000000000000000000
+    Size.Height = 24.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    object Label2: TLabel
+      Align = Left
+      StyledSettings = [Family, Size]
+      Position.X = 5.000000000000000000
+      Size.Width = 120.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = claBlue
+      Text = #1050#1091#1096#1072#1077#1090
+    end
+    object Label3: TLabel
+      Align = Client
+      StyledSettings = [Family, Size]
+      Size.Width = 120.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = claSienna
+      Text = #1044#1091#1084#1072#1077#1090
+    end
+    object Label4: TLabel
+      Align = Right
+      StyledSettings = [Family, Size]
+      Position.X = 245.000000000000000000
+      Size.Width = 62.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = claBlueviolet
+      Text = #1046#1076#1077#1090
+    end
+  end
+end

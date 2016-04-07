@@ -18,6 +18,7 @@ type
     Procedure SetRowLength(Const Value: Integer); Virtual;
     procedure SetColRowLength(Const Col, Row: Integer); Virtual;
   public
+    function ReadRowAsSingle(Const Row: Integer): TArray<Single>;
     /// <summary>Получить значение</summary>
     Function Read(Const Col, Row: Integer): TValue; overload;
     Function ReadAsSingle(Const Col, Row: Integer): Single; overload;
@@ -81,8 +82,16 @@ end;
 
 function TGridDataManager.ReadAsSingle(const Col, Row: Integer): Single;
 begin
-  if NOT Result.TryParse(Read(Col, Row).AsString, Result) then
-    Result := 0;
+  Result.TryParse(Read(Col, Row).ToString, Result)
+end;
+
+function TGridDataManager.ReadRowAsSingle(const Row: Integer): TArray<Single>;
+var
+  I: Integer;
+begin
+  SetLength(Result, RowCount);
+  for I := Low(Result) to High(Result) do
+    Result[I] := ReadAsSingle(I, Row);
 end;
 
 function TGridDataManager.RowCount: Integer;

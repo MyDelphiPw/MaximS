@@ -16,8 +16,8 @@ program ParetoAlgoritmDelphiTests;
 
 uses
   DUnitTestRunner,
-  uPareto in '..\Src\uPareto.pas',
-  TestuPareto in 'TestuPareto.pas';
+  TestuPareto in 'TestuPareto.pas',
+  uPareto in '..\Src\uPareto.pas';
 
 {$R *.RES}
 
