@@ -1,4 +1,4 @@
-program Filosofs;
+﻿program Filosofs;
 
 uses
   System.StartUpCopy,

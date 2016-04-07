@@ -1,4 +1,4 @@
-unit Unit3;
+п»їunit Unit3;
 
 interface
 
@@ -34,11 +34,9 @@ type
 
 var
   Form3: TForm3;
-  Ph: array [1 .. 5] of TPhilosophers; // массив потоков - по одному на философа
-  PHID: array [1 .. 5] of Cardinal; // идентификаторы потоков
-
-  // mutex:THandle;                      // или мутекс
-  state: array [1 .. 5] of Tmode; // состояния философов
+  Ph: array [1 .. 5] of TPhilosophers; // РјР°СЃСЃРёРІ С„РёР»РѕСЃРѕС„РѕРІ
+  PHID: array [1 .. 5] of Cardinal; // РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ РїРѕС‚РѕРєРѕРІ
+  state: array [1 .. 5] of Tmode; // СЃРѕСЃС‚РѕСЏРЅРёСЏ С„РёР»РѕСЃРѕС„РѕРІ
 
 implementation
 
@@ -56,6 +54,9 @@ var
   PieAngle: Single;
 begin
   Randomize;
+  (*
+    РЎРѕР·РґР°РµРј С„РёР»РѕСЃРѕС„РѕРІ. РЎРѕР·РґР°РµРј "РЎС‚РѕР»" С„РёР»РѕСЃРѕС„РѕРІ.
+  *)
   FPieList := TObjectList<TPie>.Create;
   for I := low(Ph) to High(Ph) do
   begin
@@ -67,9 +68,6 @@ begin
     FPieList.Last.Align := TAlignLayout.Client;
     FPieList.Last.Name := 'Pie' + I.ToString;
   end;
-
-
-  //
 
   PieAngle := 360 / FPieList.Count;
   for I := 0 to FPieList.Count - 1 do
@@ -83,6 +81,9 @@ procedure TForm3.Switch1Switch(Sender: TObject);
 var
   MyElem: TPhilosophers;
 begin
+  (*
+    Р—Р°РїСѓСЃРєР°РµРј РёР»Рё РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„РёР»РѕСЃРѕС„РѕРІ
+  *)
   for MyElem in Ph do
     if Switch1.IsChecked then
       MyElem.Resume
